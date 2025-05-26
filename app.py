@@ -13,25 +13,23 @@ st.set_page_config(
 )
 
 # UI Header
-st.title("🧠 AI Prompt Enhancer")
+st.title("AI Prompt Enhancer")
 st.markdown(
     "Convert your basic prompts into rich, structured, and actionable **advanced prompts** for Large Language Models (LLMs)."
 )
 
 # API Key Input (Optional — for secure handling)
-together_api_key = st.text_input("🔐 Enter Your Together API Key", type="password")
-if together_api_key:
-    os.environ["TOGETHER_API_KEY"] = together_api_key
+os.environ["TOGETHER_API_KEY"] = "c727254c1132b1093dfecea29ea394acbb6deb3c958619036b79fff9bb44804f"
 
 # Input Section
 basic_prompt = st.text_area(
-    "✍️ Enter a Basic Prompt",
+    "Enter a Basic Prompt",
     placeholder="e.g., Give me the code for the login page",
     height=150
 )
 
 # Button to generate
-generate_button = st.button("🚀 Generate Advanced Prompt")
+generate_button = st.button("🤔Generate Advanced Prompt")
 
 # LangChain Setup
 if generate_button:
