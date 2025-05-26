@@ -132,8 +132,21 @@ Advanced Prompt:
                 # ✅ Markdown-styled output and copy button
                 st.markdown("###  Enhanced Prompt")
 
-                html(f"""
-<div style="margin-top: 1rem; background-color: #2d2d44; border-radius: 10px; padding: 1rem; color: white; font-family: monospace; position: relative;">
+                from streamlit.components.v1 import html
+
+html(f"""
+<div style="
+    margin-top: 1rem; 
+    background-color: #2d2d44; 
+    border-radius: 10px; 
+    padding: 1rem; 
+    color: white; 
+    font-family: monospace; 
+    position: relative;
+    max-height: 350px;
+    overflow-y: auto;
+    border: 1px solid #4a4a6a;
+">
     <button onclick="
         navigator.clipboard.writeText(document.getElementById('copy-target').innerText)
         .then(function() {{
@@ -142,15 +155,41 @@ Advanced Prompt:
             setTimeout(() => msg.style.display = 'none', 2000);
         }})
     "
-    style="position: absolute; top: 10px; right: 10px; background-color: #6c63ff; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; cursor: pointer;">
+    style="
+        position: absolute; 
+        top: 10px; 
+        right: 10px; 
+        background-color: #6c63ff; 
+        color: white; 
+        border: none; 
+        padding: 6px 12px; 
+        border-radius: 6px; 
+        font-weight: bold; 
+        cursor: pointer;
+    ">
         📋 Copy
     </button>
-    <span id="copy-message" style="display:none; position: absolute; top: 12px; right: 80px; background-color: #28a745; padding: 4px 8px; border-radius: 4px; font-size: 0.85rem;">
+
+    <span id="copy-message" style="
+        display: none; 
+        position: absolute; 
+        top: 12px; 
+        right: 85px; 
+        background-color: #28a745; 
+        padding: 4px 8px; 
+        border-radius: 4px; 
+        font-size: 0.85rem;
+    ">
         ✅ Copied!
     </span>
-    <pre id="copy-target" style="white-space: pre-wrap;">{result['text']}</pre>
+
+    <pre id="copy-target" style="
+        white-space: pre-wrap; 
+        word-wrap: break-word;
+    ">{result["text"]}</pre>
 </div>
-""", height=370)
+""", height=400)
+
 
 
         except Exception as e:
