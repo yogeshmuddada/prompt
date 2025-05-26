@@ -15,22 +15,20 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    /* Background gradient for main app view */
+    /* Solid background color for the whole app */
     [data-testid="stAppViewContainer"] {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background-color: #1e1e2f;
         color: #f0f0f0;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         padding: 2rem 5rem;
     }
 
-    /* Header */
     h1 {
         text-align: center;
         color: white;
         text-shadow: 1px 1px 5px rgba(0,0,0,0.4);
     }
 
-    /* Text input areas */
     textarea {
         background: rgba(255, 255, 255, 0.85) !important;
         color: #333 !important;
@@ -39,7 +37,6 @@ st.markdown(
         font-size: 1.1rem !important;
     }
 
-    /* Buttons */
     button {
         background-color: #6c63ff !important;
         color: white !important;
@@ -57,7 +54,6 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-
 # ✅ Header
 st.title("✨ AI Prompt Enhancer")
 st.markdown(
