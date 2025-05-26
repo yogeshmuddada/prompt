@@ -2,6 +2,7 @@ import streamlit as st
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain.llms import Together
+from streamlit.components.v1 import html
 import os
 
 # ✅ Set up Streamlit page config FIRST
@@ -11,7 +12,7 @@ st.set_page_config(
     layout="centered"
 )
 
-# ✅ Inject custom CSS
+# ✅ Inject custom CSS for dark theme + UI styling
 st.markdown(
     """
     <style>
@@ -23,7 +24,6 @@ st.markdown(
         padding: 2rem 5rem;
     }
 
-    /* Title */
     h1 {
         text-align: center;
         color: #ffffff;
@@ -67,19 +67,18 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-
 # ✅ Header
 st.title("✨ AI Prompt Enhancer")
 st.markdown(
     "Convert your basic prompt into a structured, detailed, and actionable **advanced prompt** suitable for AI agents or LLMs."
 )
 
-# ✅ API key (Optional: can be secured using st.secrets)
+# ✅ API key (Optional: better to store in st.secrets or environment in production)
 os.environ["TOGETHER_API_KEY"] = "c727254c1132b1093dfecea29ea394acbb6deb3c958619036b79fff9bb44804f"
 
 # ✅ Prompt input
 basic_prompt = st.text_area(
-    "Enter Your Prompt",
+    "📝 Enter Your Prompt",
     placeholder="e.g., Give me the code for the login page",
     height=150
 )
@@ -130,9 +129,18 @@ Advanced Prompt:
                 result = chain.invoke({"basic_prompt": basic_prompt})
                 st.success("✅ Prompt Enhanced Successfully!")
 
-                # Output
+                # ✅ Markdown-styled output and copy button
                 st.markdown("### 🎯 Enhanced Prompt")
-                st.text_area("Result", value=result["text"], height=300)
+
+                html(f"""
+                <div style="margin-top: 1rem; background-color: #2d2d44; border-radius: 10px; padding: 1rem; color: white; font-family: monospace; position: relative;">
+                    <button onclick="navigator.clipboard.writeText(document.getElementById('copy-target').innerText)"
+                        style="position: absolute; top: 10px; right: 10px; background-color: #6c63ff; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; cursor: pointer;">
+                        📋 Copy
+                    </button>
+                    <pre id="copy-target" style="white-space: pre-wrap;">{result['text']}</pre>
+                </div>
+                """, height=350)
 
         except Exception as e:
             st.error(f"❌ Error: {e}")
