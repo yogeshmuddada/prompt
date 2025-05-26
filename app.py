@@ -16,7 +16,6 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    /* App background */
     [data-testid="stAppViewContainer"] {
         background-color: #1e1e2f;
         color: #f0f0f0;
@@ -30,7 +29,6 @@ st.markdown(
         text-shadow: 1px 1px 5px rgba(0,0,0,0.4);
     }
 
-    /* Label for text area */
     label[data-testid="stTextAreaLabel"] {
         color: #ffffff !important;
         font-weight: 600;
@@ -38,7 +36,6 @@ st.markdown(
         margin-bottom: 0.5rem;
     }
 
-    /* Textarea styling */
     textarea {
         background-color: #2d2d44 !important;
         color: #f2f2f2 !important;
@@ -48,7 +45,6 @@ st.markdown(
         font-size: 1.1rem !important;
     }
 
-    /* Buttons */
     button {
         background-color: #6c63ff !important;
         color: white !important;
@@ -73,7 +69,7 @@ st.markdown(
     "Convert your basic prompt into a structured, detailed, and actionable **advanced prompt** suitable for AI agents or LLMs."
 )
 
-# ✅ API key (Optional: better to store in st.secrets or environment in production)
+# ✅ API key (Note: Use secrets or secure vaults in production)
 os.environ["TOGETHER_API_KEY"] = "c727254c1132b1093dfecea29ea394acbb6deb3c958619036b79fff9bb44804f"
 
 # ✅ Prompt input
@@ -91,14 +87,12 @@ if st.button("🚀 Generate Advanced Prompt"):
         st.warning("⚠️ Please enter a prompt.")
     else:
         try:
-            # Load LLM
             llm = Together(
                 model="meta-llama/Llama-3-8b-chat-hf",
                 temperature=0.7,
                 max_tokens=1024,
             )
 
-            # Prompt Template
             prompt_template = PromptTemplate(
                 input_variables=["basic_prompt"],
                 template="""
@@ -121,20 +115,15 @@ Advanced Prompt:
 """
             )
 
-            # Chain
             chain = LLMChain(llm=llm, prompt=prompt_template)
 
-            # Run chain
             with st.spinner("🔄 Enhancing your prompt..."):
                 result = chain.invoke({"basic_prompt": basic_prompt})
                 st.success("✅ Prompt Enhanced Successfully!")
 
-                # ✅ Markdown-styled output and copy button
                 st.markdown("###  Enhanced Prompt")
 
-                from streamlit.components.v1 import html
-
-html(f"""
+                html(f"""
 <div style="
     margin-top: 1rem; 
     background-color: #2d2d44; 
@@ -189,8 +178,6 @@ html(f"""
     ">{result["text"]}</pre>
 </div>
 """, height=400)
-
-
 
         except Exception as e:
             st.error(f"❌ Error: {e}")
