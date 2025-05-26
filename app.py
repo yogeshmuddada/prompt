@@ -30,9 +30,9 @@ st.markdown(
         text-shadow: 1px 1px 5px rgba(0,0,0,0.4);
     }
 
-    
-    label[data-testid="stMarkdownContainer"] > div {
-        color: #ffffff;
+    /* Label for text area */
+    label[data-testid="stTextAreaLabel"] {
+        color: #ffffff !important;
         font-weight: 600;
         font-size: 1.15rem;
         margin-bottom: 0.5rem;
