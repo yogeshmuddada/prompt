@@ -78,7 +78,7 @@ os.environ["TOGETHER_API_KEY"] = "c727254c1132b1093dfecea29ea394acbb6deb3c958619
 
 # ✅ Prompt input
 basic_prompt = st.text_area(
-    "📝 Enter Your Prompt",
+    "Enter Your Prompt",
     placeholder="e.g., Give me the code for the login page",
     height=150
 )
@@ -130,7 +130,7 @@ Advanced Prompt:
                 st.success("✅ Prompt Enhanced Successfully!")
 
                 # ✅ Markdown-styled output and copy button
-                st.markdown("### 🎯 Enhanced Prompt")
+                st.markdown("###  Enhanced Prompt")
 
                 html(f"""
 <div style="margin-top: 1rem; background-color: #2d2d44; border-radius: 10px; padding: 1rem; color: white; font-family: monospace; position: relative;">
