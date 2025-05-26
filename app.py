@@ -15,7 +15,7 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    /* Solid background color for the whole app */
+    /* App background */
     [data-testid="stAppViewContainer"] {
         background-color: #1e1e2f;
         color: #f0f0f0;
@@ -23,20 +23,32 @@ st.markdown(
         padding: 2rem 5rem;
     }
 
+    /* Title */
     h1 {
         text-align: center;
-        color: white;
+        color: #ffffff;
         text-shadow: 1px 1px 5px rgba(0,0,0,0.4);
     }
 
+    
+    label[data-testid="stMarkdownContainer"] > div {
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 1.15rem;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Textarea styling */
     textarea {
-        background: rgba(255, 255, 255, 0.85) !important;
-        color: #333 !important;
-        border-radius: 8px !important;
-        padding: 10px !important;
+        background-color: #2d2d44 !important;
+        color: #f2f2f2 !important;
+        border: 1px solid #4a4a6a !important;
+        border-radius: 10px !important;
+        padding: 12px !important;
         font-size: 1.1rem !important;
     }
 
+    /* Buttons */
     button {
         background-color: #6c63ff !important;
         color: white !important;
@@ -54,6 +66,8 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
+
 # ✅ Header
 st.title("✨ AI Prompt Enhancer")
 st.markdown(
