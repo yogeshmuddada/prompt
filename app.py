@@ -133,14 +133,25 @@ Advanced Prompt:
                 st.markdown("### 🎯 Enhanced Prompt")
 
                 html(f"""
-                <div style="margin-top: 1rem; background-color: #2d2d44; border-radius: 10px; padding: 1rem; color: white; font-family: monospace; position: relative;">
-                    <button onclick="navigator.clipboard.writeText(document.getElementById('copy-target').innerText)"
-                        style="position: absolute; top: 10px; right: 10px; background-color: #6c63ff; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; cursor: pointer;">
-                        📋 Copy
-                    </button>
-                    <pre id="copy-target" style="white-space: pre-wrap;">{result['text']}</pre>
-                </div>
-                """, height=350)
+<div style="margin-top: 1rem; background-color: #2d2d44; border-radius: 10px; padding: 1rem; color: white; font-family: monospace; position: relative;">
+    <button onclick="
+        navigator.clipboard.writeText(document.getElementById('copy-target').innerText)
+        .then(function() {{
+            const msg = document.getElementById('copy-message');
+            msg.style.display = 'inline';
+            setTimeout(() => msg.style.display = 'none', 2000);
+        }})
+    "
+    style="position: absolute; top: 10px; right: 10px; background-color: #6c63ff; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; cursor: pointer;">
+        📋 Copy
+    </button>
+    <span id="copy-message" style="display:none; position: absolute; top: 12px; right: 80px; background-color: #28a745; padding: 4px 8px; border-radius: 4px; font-size: 0.85rem;">
+        ✅ Copied!
+    </span>
+    <pre id="copy-target" style="white-space: pre-wrap;">{result['text']}</pre>
+</div>
+""", height=370)
+
 
         except Exception as e:
             st.error(f"❌ Error: {e}")
