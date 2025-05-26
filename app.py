@@ -1,125 +1,88 @@
-# app.py
 import streamlit as st
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain.llms import Together
 import os
 
-st.markdown(
-    """
-    <style>
-    /* Background gradient */
-    .stApp {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: #f0f0f0;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        min-height: 100vh;
-        padding: 2rem 5rem;
-    }
-
-    /* Title style */
-    .title {
-        font-size: 3rem;
-        font-weight: 700;
-        color: #fff;
-        text-align: center;
-        margin-bottom: 0.5rem;
-        text-shadow: 1px 1px 5px rgba(0,0,0,0.4);
-    }
-
-    /* Subtitle/description */
-    .subtitle {
-        font-size: 1.25rem;
-        color: #ddd;
-        text-align: center;
-        margin-bottom: 2rem;
-        text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
-    }
-
-    /* Input and output boxes */
-    .stTextArea>div>div>textarea {
-        background: rgba(255, 255, 255, 0.85);
-        color: #333;
-        border-radius: 8px;
-        padding: 10px;
-        font-size: 1.1rem;
-    }
-
-    .stTextInput>div>div>input {
-        background: rgba(255, 255, 255, 0.85);
-        color: #333;
-        border-radius: 8px;
-        padding: 10px;
-        font-size: 1.1rem;
-    }
-
-    .stButton>button {
-        background-color: #6c63ff;
-        color: white;
-        font-size: 1.25rem;
-        padding: 10px 25px;
-        border-radius: 12px;
-        border: none;
-        font-weight: 600;
-        transition: background-color 0.3s ease;
-        margin-top: 1rem;
-    }
-
-    .stButton>button:hover {
-        background-color: #5848c2;
-        cursor: pointer;
-    }
-
-    /* Result text area */
-    .result-textarea textarea {
-        background: rgba(0, 0, 0, 0.7);
-        color: #fff;
-        font-family: monospace;
-        font-size: 1rem;
-        border-radius: 8px;
-        padding: 15px;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
-
-# Set up Streamlit page config
+# ✅ Set up Streamlit page config FIRST
 st.set_page_config(
     page_title="Advanced Prompt Generator",
     page_icon="✨",
     layout="centered"
 )
 
-# UI Header
-st.title("AI Prompt Enhancer")
+# ✅ Inject custom CSS
 st.markdown(
-    "Convert your basic prompts into rich, structured, and actionable **advanced prompts** for Large Language Models (LLMs)."
+    """
+    <style>
+    /* Background gradient for main app view */
+    [data-testid="stAppViewContainer"] {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #f0f0f0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        padding: 2rem 5rem;
+    }
+
+    /* Header */
+    h1 {
+        text-align: center;
+        color: white;
+        text-shadow: 1px 1px 5px rgba(0,0,0,0.4);
+    }
+
+    /* Text input areas */
+    textarea {
+        background: rgba(255, 255, 255, 0.85) !important;
+        color: #333 !important;
+        border-radius: 8px !important;
+        padding: 10px !important;
+        font-size: 1.1rem !important;
+    }
+
+    /* Buttons */
+    button {
+        background-color: #6c63ff !important;
+        color: white !important;
+        font-size: 1.1rem !important;
+        padding: 10px 25px !important;
+        border-radius: 12px !important;
+        border: none !important;
+        font-weight: 600;
+    }
+
+    button:hover {
+        background-color: #5848c2 !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
 )
 
-# API Key Input (Optional — for secure handling)
+# ✅ Header
+st.title("✨ AI Prompt Enhancer")
+st.markdown(
+    "Convert your basic prompt into a structured, detailed, and actionable **advanced prompt** suitable for AI agents or LLMs."
+)
+
+# ✅ API key (Optional: can be secured using st.secrets)
 os.environ["TOGETHER_API_KEY"] = "c727254c1132b1093dfecea29ea394acbb6deb3c958619036b79fff9bb44804f"
 
-# Input Section
+# ✅ Prompt input
 basic_prompt = st.text_area(
-    "Enter a Basic Prompt",
+    "📝 Enter a Basic Prompt",
     placeholder="e.g., Give me the code for the login page",
     height=150
 )
 
-# Button to generate
-generate_button = st.button("🤔Generate Advanced Prompt")
-
-# LangChain Setup
-if generate_button:
-    if not together_api_key:
-        st.warning("⚠️ Please enter your Together API Key.")
+# ✅ Button to generate
+if st.button("🚀 Generate Advanced Prompt"):
+    if not os.environ.get("TOGETHER_API_KEY"):
+        st.warning("⚠️ Please enter your Together API key.")
     elif not basic_prompt.strip():
-        st.warning("⚠️ Please enter a basic prompt.")
+        st.warning("⚠️ Please enter a prompt.")
     else:
-        # Initialize LLM
         try:
+            # Load LLM
             llm = Together(
                 model="meta-llama/Llama-3-8b-chat-hf",
                 temperature=0.7,
@@ -152,14 +115,14 @@ Advanced Prompt:
             # Chain
             chain = LLMChain(llm=llm, prompt=prompt_template)
 
-            # Run
+            # Run chain
             with st.spinner("🔄 Enhancing your prompt..."):
                 result = chain.invoke({"basic_prompt": basic_prompt})
                 st.success("✅ Prompt Enhanced Successfully!")
 
-                # Display result
-                st.markdown("### ✨ Enhanced Prompt")
+                # Output
+                st.markdown("### 🎯 Enhanced Prompt")
                 st.text_area("Result", value=result["text"], height=300)
 
         except Exception as e:
-            st.error(f"❌ Error occurred: {e}")
+            st.error(f"❌ Error: {e}")
