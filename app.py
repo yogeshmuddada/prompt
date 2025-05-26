@@ -79,7 +79,7 @@ os.environ["TOGETHER_API_KEY"] = "c727254c1132b1093dfecea29ea394acbb6deb3c958619
 
 # ✅ Prompt input
 basic_prompt = st.text_area(
-    "📝 Enter a Basic Prompt",
+    "Enter Your Prompt",
     placeholder="e.g., Give me the code for the login page",
     height=150
 )
